@@ -1,0 +1,28 @@
+# MySQL 서버와 phpMyAdmin 클라이언트 프로그램
+
+version: "3.8"
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: mysql-server
+    ports:
+      - "3306:3306"
+    environment: 
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: db_test
+    volumes: 
+      - mysql-vol:/var/lib/mysql
+  phpmyadmin:  # 서비스명 phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    ports:
+      - "8081:80"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      PMA_HOST: db  # db 서비스명을 이용해서 MySQL 호스트를 지정(Docker Compose에서는 서비스명 자체가 도메인처럼 작동)
+    depends_on:
+      - db  # db 서비스를 먼저 동작 시킴
+
+volumes:
+  mysql-vol:

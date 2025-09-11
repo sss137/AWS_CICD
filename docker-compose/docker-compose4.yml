@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  tomcat:
+    image: tomcat:9.0
+    container_name: tomcat-server
+    ports:
+      - "8080:8080" 
+    volumes:
+      - ~/tomcat/webapps:/usr/local/tomcat/webapps
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx-server
+    ports:
+      - "80:80"
+    volumes:
+      - ~/nginx/conf.d:/etc/nginx/conf.d  
+    depends_on:
+      - tomcat

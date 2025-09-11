@@ -1,0 +1,62 @@
+### 도커 컴포즈 설치
+
+# 설치할 Docker Compose 버전 변수 설정 (예: 2.20.2)
+DOCKER_COMPOSE_VERSION=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep 'tag_name' | cut -d '"' -f 4)
+echo $DOCKER_COMPOSE_VERSION
+
+# 바이너리 다운로드
+sudo curl -L "https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+# 실행 권한 부여
+sudo chmod +x /usr/local/bin/docker-compose
+
+# 도커 컴포즈 버전 확인
+docker-compose --version
+
+================================================================================================================
+
+### private key (*.pem) 파일의 권한(소유자만 읽기: 400) 조정하기
+
+1. Linux / macOS
+$ chmod 400 aws.pem
+
+2. Windows PowerShell 이용
+$ icacls aws.pem /reset
+$ icacls aws.pem /grant:r "$($env:username):(r)"
+$ icacls aws.pem /inheritance:r
+
+================================================================================================================
+
+### 수업 방식
+
+# local
+  vscode    : 도커컴포즈 파일 생성 -> aws 도커컴포즈 파일 복사 (scp 명령어 : 서버로 복사하기 위해 인증 수단이 필요)
+              docker-compose1.xml
+              docker-compose2.xml
+              ...
+
+# aws
+  mobaxterm : 도커컴포즈 파일 실행 -> 실행 결과 확인 (컨테이너 실행)
+              docker-compose.xml
+
+================================================================================================================
+
+# Tomcat docker-compose 
+
+  볼륨 처리 (Bind Mount)
+
+  Host                         Container
+  /home/ubuntu/                /usr/local/tomcat/webapps/ROOT/index.html
+    ㄴdocker-compose.xml
+    ㄴtomcat
+      ㄴwebapps
+        ㄴROOT
+          ㄴindex.html
+
+  volumes:
+    - ~/tomcat/webapps:/usr/local/tomcat/webapps
+
+  $ mkdir -p ~/tomcat/webapps 명령으로 디렉터리를 직접 생성한 뒤 ROOT 디렉터리와 index.html 배치하기
+  $ docker-compose up -d 명령으로 tomcat-server 컨테이너 실행하기
+  
+  http://public-ip:8080 접속 시 index.html 확인 가능

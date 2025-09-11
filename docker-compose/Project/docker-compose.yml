@@ -1,0 +1,10 @@
+# 프로젝트의 Dockerfile을 실행할 docker-compose.yml
+
+version: "3.8"
+
+services:
+  app:
+    build: .  # Dockerfile 저장 위치 (docker-compose.yml과 같은 곳에 두고 실행)
+    ports:
+      - "8080:8080"
+    

@@ -1,0 +1,12 @@
+# YAML 파일
+# 프로퍼티를 들여쓰기로 구분해서 작성
+
+version: "3.8" # Docker Compose 버전 명시
+
+# 도커 컴포즈에서는 컨테이너를 서비스로 처리
+services:
+  webserver:  # 서비스 이름 (임의로 지정)
+    image: nginx:latest  # nginx 최신 공식 이미지
+    container_name: nginx-server  # 컨테이너 이름
+    ports:
+      - "80:80"  # 호스트(EC2)의 80 포트와 컨테이너(Nginx)의 80 포트 연결
