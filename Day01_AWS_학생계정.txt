@@ -1,0 +1,19 @@
+1. 접속 주소
+https://gdu-cloud.signin.aws.amazon.com/console
+
+2. 비번 공통
+!P@ssw0rd
+
+3. 개인별 아이디
+권형택 : stud_01
+김경진 : stud_02
+김민석 : stud_03
+박진성 : stud_04
+신성수 : stud_05
+유비   : stud_06
+이동욱 : stud_07
+이유천 : stud_08
+이창민 : stud_09
+조기완 : stud_10
+최미영 : stud_11
+

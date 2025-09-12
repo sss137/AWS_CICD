@@ -1,0 +1,57 @@
+1. Github에서 발급 받은 Personal Access Token 교체하기
+  1) [제어판] - [자격 증명 관리자] - [Windows 자격 증명] - github 삭제 (기존 PAT 등록 삭제)
+  2) github.com 로그인 - PAT 발급 받으러 가기
+  3) repo, workflow, write:package 체크 후 생성
+
+2. DeployProject 프로젝트 준비 및 github 업로드
+
+3. CI/CD
+  1) CI : Continuous Integration      - 빌드 자동화
+  2) CD : Continuous Delivery(Deploy) - 배포 자동화
+  3) Github Actions 이용
+    - YAML 파일 형식의 스크립트 작업
+    - 프로젝트/.github/workflows/*.yml 파일을 생성하고 작업 진행
+
+4. DeployProject/.github/workflows/cicd.yml 파일 생성
+
+5. secrets 등록
+  1) github.com에 등록
+  2) DeployProject 레파지토리 - [settings] - [secrets and variables] - [New repository secret]
+
+6. 설정 환경
+  1) cicd.yml
+    GitHub Runner 환경:
+    ├── Ubuntu 22.04 (ubuntu-latest)
+    ├── JDK 11 (GitHub에서 설정)
+    ├── Maven 3.x (사전 설치)
+    └── target/*.war (첫 번째 빌드 결과)
+  2) Dockerfile
+    Docker Container 환경:
+    ├── maven:3.8.4-openjdk-11 (베이스 이미지)
+    ├── JDK 11 (이미지에 포함)
+    ├── Maven 3.8.4 (이미지에 포함)
+    └── /myapp/target/*.war (두 번째 빌드 결과)
+
+7. EC2 인스턴스 생성 후 초기 스크립트 실행
+    # 시스템 업데이트
+    sudo apt update
+
+    # Docker 설치
+    sudo apt install -y docker.io
+    sudo systemctl start docker
+    sudo systemctl enable docker
+    sudo usermod -aG docker ubuntu
+    newgrp docker
+
+    # MySQL 컨테이너 실행
+    docker run -d \
+        --name mysql-server \
+        -p 3306:3306 \
+        -e MYSQL_ROOT_PASSWORD=root \
+        -e MYSQL_DATABASE=db_file \
+        -e MYSQL_USER=goodee \
+        -e MYSQL_PASSWORD=goodee \
+        mysql:8.0
+  
+8. Workbench 열어 EC2 인스턴스에 실행 중인 MySQL 컨테이너에 접속
+  Connection 만들어 public-ip, goodee/goodee 정보로 접속

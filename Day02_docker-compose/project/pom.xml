@@ -1,41 +1,43 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" 
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.shark</groupId>
   <artifactId>project</artifactId>
   <version>1.0.0</version>
   <packaging>war</packaging>
   
-  <!-- pom.xml 파일은 가능하면 저장은 최대한 미루고 한 번에 하세요. -->
-  
-  <!-- properties: ${}(프로퍼티 대치 문법)을 이용해 가져다 사용할 수 있습니다. -->
+  <!-- properties : ${} (프로퍼티 대치 문법)을 이용해 가져다 사용할 수 있습니다. -->
   <properties>
     <java.version>11</java.version>
     <spring.version>5.3.39</spring.version>
-    <aspectj.version>1.9.22.1</aspectj.version>
+    <aspectj.version>1.9.24</aspectj.version>
     <slf4j.version>1.7.36</slf4j.version>
     <logback.version>1.2.13</logback.version>
     <junit.version>4.13.2</junit.version>
+    <jackson.version>2.17.2</jackson.version>
   </properties>
   
-  <!-- dependencies: 디펜던시(=jar 파일)를 모아둡니다. -->
-  <!-- 
+  <!-- dependencies : 디펜던시를 모아둡니다. -->
+  <!--
     dependency's scope
-    1. compile: 디폴트. 컴파일/테스트/빌드/배포/ 시 모두 사용합니다.
-    2. provided: 컴파일/빌드 시에는 사용하고, 배포 시 사용하지 않습니다.(코딩할 땐 사용하고, WAR 파일로 배포할 땐 톰캣이 제공하는 API를 사용합니다.)
-    3. test: 테스트 시에만 사용합니다.
-    4. runtime: 실행 시에만 사용합니다.
-   -->
-   <!-- 
-   Tomcat 9.0을 이용한 JSP 개발 시 필요한 디펜던시
-   1. Servlet API 4.0.1
-   2. JSP API 2.3.3
-   3. JSTL 1.2
-    -->
+    
+    1. compile  : 디폴트. 컴파일/테스트/빌드/배포 시 모두 사용합니다. 
+    2. provided : 컴파일/빌드 시에는 사용하고, 배포 시에는 사용하지 않습니다. (코딩할 땐 사용하고, WAR 파일로 배포할 땐 톰캣이 제공하는 API를 사용합니다.)
+    3. test     : 테스트 시에만 사용합니다.
+    4. runtime  : 실행 시에만 사용합니다.
+  -->
+  <!-- 
+    Tomcat 9.0을 이용한 JSP 개발 시 필요한 디펜던시
+    
+    1. Servlet API 4.0.1
+    2. JSP API 2.3.3
+    3. JSTL 1.2
+  -->
   <dependencies>
-    <!-- Spring Web MVC: Spring MVC Project를 위한 필수 디펜던시 -->
+  
+    <!-- Spring Web MVC -->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-webmvc</artifactId>
@@ -49,7 +51,7 @@
       <version>${spring.version}</version>
     </dependency>
     
-    <!-- AOP(Spring AOP with Aspectjweaver) -->
+    <!-- AOP (Spring AOP, AspectJ Runtime, AspectJ Weaver) -->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-aop</artifactId>
@@ -57,28 +59,29 @@
     </dependency>
     <dependency>
       <groupId>org.aspectj</groupId>
+      <artifactId>aspectjrt</artifactId>
+      <version>${aspectj.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.aspectj</groupId>
       <artifactId>aspectjweaver</artifactId>
       <version>${aspectj.version}</version>
       <scope>runtime</scope>
     </dependency>
-  
-    <!-- Servlet API 4.0.1 -->
+    
+    <!-- JSP (Servlet API, JSP API, JSTL) -->
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
       <version>4.0.1</version>
       <scope>provided</scope>
     </dependency>
-        
-    <!-- JSP(Servlet API, JSP API, JSTL -->
     <dependency>
       <groupId>javax.servlet.jsp</groupId>
       <artifactId>javax.servlet.jsp-api</artifactId>
       <version>2.3.3</version>
       <scope>provided</scope>
     </dependency>
-    
-    <!-- JSTL 1.2 -->
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>jstl</artifactId>
@@ -92,7 +95,7 @@
       <version>1.18.38</version>
     </dependency>
     
-    <!-- Logging(SLF4J with Logback) -->
+    <!-- Logging (SLF4J with Logback) -->
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
@@ -102,26 +105,44 @@
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
       <version>${logback.version}</version>
+      <scope>compile</scope>
     </dependency>
     
-    <!-- Testing(junit 4, Spring Test) -->
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>${junit.version}</version>
-      <scope>test</scope>
-    </dependency>
+    <!-- Testing (Spring Test, JUint 4) -->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-test</artifactId>
       <version>${spring.version}</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
     
-    <!-- Database(Spring JDBC, MySQL Connector, MyBatis, MyBatis Spring, HikariCP -->
+    <!-- Validation (Bean Validation API, Hibernate Validator) -->
+    <dependency>
+      <groupId>javax.validation</groupId>
+      <artifactId>validation-api</artifactId>
+      <version>2.0.1.Final</version>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate.validator</groupId>
+      <artifactId>hibernate-validator</artifactId>
+      <version>6.0.13.Final</version>
+    </dependency>
+    
+    <!-- Database (Spring JDBC, Spring TX, MySQL Connector/J, MyBatis, MyBatis Spring, HikariCP) -->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-jdbc</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-tx</artifactId>
       <version>${spring.version}</version>
     </dependency>
     <dependency>
@@ -145,30 +166,28 @@
       <version>5.1.0</version>
     </dependency>
     
-    <!-- File Upload -->
-    <dependency>
-      <groupId>commons-fileupload</groupId>
-      <artifactId>commons-fileupload</artifactId>
-      <version>1.4</version>
-    </dependency>
-    
-    <!-- Jackson Library(Jackson Databind, Jackson Dataformat XML) -->
+    <!-- Jackson Library (Jackson Databind + Jackson Dataformat XML + Jackson Datatype: JSR310) -->
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
-      <version>2.12.7.2</version>
+      <version>${jackson.version}</version>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.dataformat</groupId>
       <artifactId>jackson-dataformat-xml</artifactId>
-      <version>2.12.7</version>
+      <version>${jackson.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.datatype</groupId>
+      <artifactId>jackson-datatype-jsr310</artifactId>
+      <version>${jackson.version}</version>
     </dependency>
     
   </dependencies>
-
+  
   <build>
     <plugins>
-      <!-- Compiler(*.java To *.class) -->
+      <!-- Compiler (*.java To *.class) -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -178,24 +197,19 @@
           <target>${java.version}</target>
         </configuration>
       </plugin>
-      <!-- WAR(*.war) -->
+      <!-- WAR (*.war) -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
         <version>3.4.0</version>
       </plugin>
-      <!-- Template(archetype) -->
+      <!-- Template (archetype) -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-archetype-plugin</artifactId>
         <version>3.1.2</version>
       </plugin>
     </plugins>
-    
   </build>
   
 </project>
-
-
-
-

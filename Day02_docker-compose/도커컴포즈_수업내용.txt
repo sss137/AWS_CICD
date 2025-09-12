@@ -13,19 +13,30 @@ sudo chmod +x /usr/local/bin/docker-compose
 # 도커 컴포즈 버전 확인
 docker-compose --version
 
+
+
 ================================================================================================================
+
+
 
 ### private key (*.pem) 파일의 권한(소유자만 읽기: 400) 조정하기
 
+
 1. Linux / macOS
 $ chmod 400 aws.pem
+
+
 
 2. Windows PowerShell 이용
 $ icacls aws.pem /reset
 $ icacls aws.pem /grant:r "$($env:username):(r)"
 $ icacls aws.pem /inheritance:r
 
+
+
 ================================================================================================================
+
+
 
 ### 수업 방식
 
@@ -39,7 +50,20 @@ $ icacls aws.pem /inheritance:r
   mobaxterm : 도커컴포즈 파일 실행 -> 실행 결과 확인 (컨테이너 실행)
               docker-compose.xml
 
+
+
 ================================================================================================================
+
+
+
+# 실행 방식
+  docker-compose.yml 파일이 있는 곳에서
+  "docker-compose up" 명령으로 실행 (백그라운드 실행을 위해 -d 옵션 추가 가능)
+
+
+
+================================================================================================================
+
 
 # Tomcat docker-compose 
 
@@ -60,3 +84,23 @@ $ icacls aws.pem /inheritance:r
   $ docker-compose up -d 명령으로 tomcat-server 컨테이너 실행하기
   
   http://public-ip:8080 접속 시 index.html 확인 가능
+
+
+================================================================================================================
+
+
+
+도커 허브 (https://hub.docker.com/)
+
+1. 도커 이미지를 업로드 할 수 있는 레지스트리입니다.
+2. 도커 허브에 로그인
+  1) 일회용 비번으로 접속
+    $ docker login
+  2) 아이디/비밀번호로 접속
+    $ docker login -u <계정명>
+    Password: <비밀번호>
+3. 도커 허브에 도커 이미지 업로드
+  $ docker image push <이미지명>
+
+※ 도커 허브에 올릴 이미지는 만들 때 <계정>/<이미지>:<태그> 형식으로 네이밍을 해 두는 것이 좋습니다.
+  $ docker build -t superman/app-image:1.0

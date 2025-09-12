@@ -1,7 +1,7 @@
 # YAML 파일
 # 프로퍼티를 들여쓰기로 구분해서 작성
 
-version: "3.8" # Docker Compose 버전 명시
+version: "3.8"  # Docker Compose 버전 명시
 
 # 도커 컴포즈에서는 컨테이너를 서비스로 처리
 services:

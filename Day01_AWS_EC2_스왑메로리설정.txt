@@ -16,7 +16,7 @@
     $ sudo dd if=/dev/zero of=/swapfile bs=128M count=32   ## /dev/zero 파일을 읽어서 /swapfile 파일로 보낸다.
     ### 옵션
       if [File] = 지정한 파일을 입력대상으로 설정
-        /dev/zero는 읽기를 위해 가능한 많은 널 문자(ASCII NUL, 0x00)를 제공하는 유닉스 계열 운영 체제의 특수 장치 파일이다.
+       /dev/zero는 읽기를 위해 가능한 많은 널 문자(ASCII NUL, 0x00)를 제공하는 유닉스 계열 운영 체제의 특수 장치 파일이다.
        널 문자로 채워진, foobar라는 이름의 1 MiB 파일을 생성하려면: $ dd if=/dev/zero of=foobar count=1024 bs=1024 
       of [File] = 지정한 파일을 출력대상으로 설정
       bs [Bytes] = 한 번에 읽고 쓸 최대 바이트 크기 지정
