@@ -24,4 +24,6 @@ COPY --from=mvn-build /app/target/*.war /usr/local/tomcat/webapps/Project.war
 # 포트
 EXPOSE 8080
 
-# 결론 : 이 Dockerfile을 빌드하면 내 자바 프로젝트가 Tomcat에서 자동 실행되는 Docker 이미지가 만들어집니다
+## 이 Dockerfile을 빌드하면 내 자바 프로젝트가 Tomcat에서 자동 실행되는 Docker 이미지가 만들어집니다
+## 빌드 환경(Maven)과 실행 환경(Tomcat)을 분리해서 이미지 최적화
+## 최종 이미지는 Tomcat만 포함 → 가볍고 배포용으로 적합
