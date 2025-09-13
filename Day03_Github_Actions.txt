@@ -43,7 +43,7 @@
     sudo usermod -aG docker ubuntu
     newgrp docker
 
-    # MySQL 컨테이너 실행
+    # MySQL 컨테이너 실행  
     docker run -d \
         --name mysql-server \
         -p 3306:3306 \
